@@ -23,7 +23,7 @@ import br.com.fiap.mybmi.ui.theme.MyBMITheme
 
 
 @Composable
-fun WeightForm(modifier: Modifier = Modifier) {
+fun WeightForm(onCancel: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -77,7 +77,9 @@ fun WeightForm(modifier: Modifier = Modifier) {
         }
         Spacer(modifier = Modifier.height(48.dp))
         TextButton(
-            onClick = {},
+            onClick = {
+                onCancel()
+            },
             modifier = Modifier.fillMaxWidth()
         ){
             Text(text = "Cancel")
@@ -89,6 +91,6 @@ fun WeightForm(modifier: Modifier = Modifier) {
 @Composable
 private fun WeightFormPreview() {
     MyBMITheme {
-        WeightForm()
+        WeightForm(onCancel = {})
     }
 }

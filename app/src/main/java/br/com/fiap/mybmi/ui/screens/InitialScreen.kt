@@ -77,7 +77,11 @@ fun InitialScreen(viewModel: InitialScreenViewModel) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                when (currentScreen) {
-                   is Screen.WeightForm -> WeightForm()
+                   is Screen.WeightForm -> WeightForm(
+                       onCancel = {
+                           viewModel.openWeightLedger()
+                       }
+                   )
                    is Screen.WeightLedger -> WeightLedger()
                }
             }
