@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.fiap.mybmi.model.Weight
 
-@Database(entities = [Weight::class], version = 1, exportSchema = false)
+@Database(entities = [Weight::class], version = 2, exportSchema = false)
 abstract class BmiDb: RoomDatabase() {
     abstract fun weightDao(): WeightDao
 

@@ -87,9 +87,16 @@ fun InitialScreen(viewModel: InitialScreenViewModel) {
                    is Screen.WeightForm -> WeightForm(
                        onCancel = {
                            viewModel.openWeightLedger()
+                       },
+                       onRegisterWeight = { weight ->
+                           viewModel.insertWeight(
+                               weight = weight
+                           )
+                           viewModel.openWeightLedger()
                        }
                    )
                    is Screen.WeightLedger -> WeightLedger(weights)
+
                }
             }
         }

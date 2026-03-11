@@ -1,7 +1,5 @@
 package br.com.fiap.mybmi.ui.screens
 
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,11 +28,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
 import br.com.fiap.mybmi.model.Weight
+
 import br.com.fiap.mybmi.ui.theme.MyBMITheme
 
 @Composable
-fun WeightLedger(weights: List<Weight>) {
+fun WeightLedger(weight: List<Weight>) {
     Column() {
         Text(
             text = "My Progress",
@@ -50,18 +50,17 @@ fun WeightLedger(weights: List<Weight>) {
                 .background(Color(0xFFF5F5F5)),
             contentPadding = PaddingValues(top = 16.dp, bottom = 64.dp),
         ) {
-            items(weights) {
+            items(weight) { weight ->
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = it.date
+                        text = weight.date
                     )
                     Text(
-                        text = " ${it.weight} kg",
-                        fontWeight = FontWeight.Bold
+                        text = "${weight.weight} Kg"
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -74,7 +73,8 @@ fun WeightLedger(weights: List<Weight>) {
                             )
                         ) {
                             Text(
-                                text = "BMI: ${String.format("%.1f", it.bmi)} - ${it.status.uppercase()}",
+                                text = "BMI: ${String.format("%.1f", weight.bmi)}  - ${weight.statusBmi}",
+                                fontWeight = FontWeight.Bold, color = Color.White,
                                 modifier = Modifier.padding(
                                     horizontal = 8.dp,
                                     vertical = 2.dp
@@ -98,12 +98,12 @@ fun WeightLedger(weights: List<Weight>) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun WeightLedgerPreview() {
-    MyBMITheme() {
+    MyBMITheme()  {
         WeightLedger(
-            emptyList()
+            weight = emptyList()
         )
     }
 }

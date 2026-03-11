@@ -13,6 +13,6 @@ data class Weight(
     val height: Double,
     val weight: Double,
     val bmi: Double,
-    val status: String,
+    val statusBmi: String,
     val color: String
 )
