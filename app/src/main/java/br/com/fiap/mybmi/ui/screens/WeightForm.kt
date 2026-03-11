@@ -14,16 +14,32 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.fiap.mybmi.model.Weight
 import br.com.fiap.mybmi.ui.theme.MyBMITheme
+import br.com.fiap.mybmi.utils.BmiHelper
+import java.time.LocalDate
 
 
 @Composable
-fun WeightForm(onCancel: () -> Unit) {
+fun WeightForm(
+    onCancel: () -> Unit,
+    onRegister: (weight: Weight) -> Unit
+) {
+    var weightDate by remember { mutableStateOf(LocalDate.now().toString()) }
+    var height by remember { mutableStateOf("") }
+    var weight by remember { mutableStateOf("") }
+
+
     Column(
         modifier = Modifier
             .padding(32.dp)
@@ -44,17 +60,18 @@ fun WeightForm(onCancel: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(48.dp))
         TextField(
-            value = "",
-            onValueChange = {},
+            value = weightDate,
+            onValueChange = {weightDate = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Date")
-            }
+            },
+            readOnly = true
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-            value = "",
-            onValueChange = {},
+            value = height,
+            onValueChange = {height = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Height")
@@ -62,8 +79,8 @@ fun WeightForm(onCancel: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         TextField(
-            value = "",
-            onValueChange = {},
+            value = weight,
+            onValueChange = {weight = it},
             modifier = Modifier.fillMaxWidth(),
             label = {
                 Text(text = "Weight")
@@ -71,7 +88,30 @@ fun WeightForm(onCancel: () -> Unit) {
         )
         Spacer(modifier = Modifier.height(48.dp))
         Button (
-            onClick = {},
+            onClick = {
+                val bmi = BmiHelper
+                    .calculateBmi(
+                        weight.toDouble(),
+                        height.toDouble()
+                    )
+                val bmiStatus = BmiHelper
+                    .setBmiStatus(bmi).values.first()
+                val color = BmiHelper
+                    .setBmiStatus(bmi).keys.first()
+                val weight = Weight(
+                    id = 0,
+                    date = weightDate,
+                    height = height.toDouble(),
+                    weight = weight.toDouble(),
+                    bmi = bmi,
+                    status = bmiStatus,
+                    color = color
+                )
+                onRegister(
+                    weight
+                )
+
+            },
             modifier = Modifier.fillMaxWidth()
         ){
             Text(text = "Save entry")
@@ -92,6 +132,9 @@ fun WeightForm(onCancel: () -> Unit) {
 @Composable
 private fun WeightFormPreview() {
     MyBMITheme {
-        WeightForm(onCancel = {})
+        WeightForm(
+            onCancel = {},
+            onRegister = {}
+        )
     }
 }
