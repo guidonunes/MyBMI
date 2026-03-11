@@ -69,7 +69,7 @@ fun WeightLedger(weight: List<Weight>) {
                     ) {
                         Card(
                             colors = CardDefaults.cardColors(
-                                containerColor = Color(0xFFFFC107)
+                                containerColor = Color(weight.color.toLong(16))
                             )
                         ) {
                             Text(
