@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -55,4 +56,15 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation("androidx.room:room-runtime:2.6.1")
+
+    // Room Kotlin Extensions para utilizar
+    // juntamente com Coroutines
+    implementation("androidx.room:room-ktx:2.6.1")
+
+
+    // Neste exemplo vamos utilizar o kapt - Kotlin Annotation Processing Tool
+    // Como processador de anotações
+    //kapt("androidx.room:room-compiler:2.6.1")
 }
