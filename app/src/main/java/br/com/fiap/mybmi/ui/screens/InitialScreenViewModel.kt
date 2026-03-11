@@ -22,7 +22,4 @@ import androidx.compose.runtime.State
             _currentScreen.value = Screen.WeightLedger
         }
 
-    }
-
-
 }

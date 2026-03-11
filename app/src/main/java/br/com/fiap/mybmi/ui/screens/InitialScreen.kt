@@ -25,7 +25,10 @@ import br.com.fiap.mybmi.ui.theme.MyBMITheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InitialScreen() {
+fun InitialScreen(viewModel: InitialScreenViewModel) {
+
+    val currentScreen = viewModel.currentScreen.value
+
     Scaffold(
         modifier = Modifier
             .background(color = Color.LightGray),
@@ -50,11 +53,19 @@ fun InitialScreen() {
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {}
-            ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "New Entry")
+            if (currentScreen is Screen.WeightLedger){
+                FloatingActionButton(
+                    onClick = {
+                        viewModel.openWeightForm()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "New entry"
+                    )
+                }
             }
+
         }
     ) { paddingValues ->
         Box(
@@ -65,7 +76,10 @@ fun InitialScreen() {
             Column(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                WeightLedger()
+               when (currentScreen) {
+                   is Screen.WeightForm -> WeightForm()
+                   is Screen.WeightLedger -> WeightLedger()
+               }
             }
         }
     }
@@ -75,6 +89,8 @@ fun InitialScreen() {
 @Composable
 fun InitialScreenPreview() {
     MyBMITheme {
-        InitialScreen()
+        InitialScreen(
+            viewModel = InitialScreenViewModel()
+        )
     }
 }
