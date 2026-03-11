@@ -6,21 +6,26 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.fiap.mybmi.model.Weight
 
-@Database(entities = [Weight::class], version = 1)
+@Database(entities = [Weight::class], version = 1, exportSchema = false)
 abstract class BmiDb: RoomDatabase() {
+    abstract fun weightDao(): WeightDao
+
     companion object {
-        private lateinit var instance: BmiDb
+        @Volatile
+        private var INSTANCE: BmiDb? = null
+
         fun getDatabase(context: Context): BmiDb {
-            if (!::instance.isInitialized) {
-                instance = Room.databaseBuilder(
-                    context,
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
                     BmiDb::class.java,
-                    "bmi.db"
+                    "bmi_db"
                 )
                     .fallbackToDestructiveMigration()
                     .build()
+                INSTANCE = instance
+                instance
             }
-            return instance
         }
     }
 }

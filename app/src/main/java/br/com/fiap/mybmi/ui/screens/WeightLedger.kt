@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -29,10 +30,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.com.fiap.mybmi.model.Weight
 import br.com.fiap.mybmi.ui.theme.MyBMITheme
 
 @Composable
-fun WeightLedger(modifier: Modifier = Modifier) {
+fun WeightLedger(weights: List<Weight>) {
     Column() {
         Text(
             text = "My Progress",
@@ -48,17 +50,18 @@ fun WeightLedger(modifier: Modifier = Modifier) {
                 .background(Color(0xFFF5F5F5)),
             contentPadding = PaddingValues(top = 16.dp, bottom = 64.dp),
         ) {
-            items(15) {
+            items(weights) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = "15-10-2025"
+                        text = it.date
                     )
                     Text(
-                        text = "79.5 Kg"
+                        text = " ${it.weight} kg",
+                        fontWeight = FontWeight.Bold
                     )
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,7 +74,7 @@ fun WeightLedger(modifier: Modifier = Modifier) {
                             )
                         ) {
                             Text(
-                                text = "Underweight",
+                                text = "BMI: ${String.format("%.1f", it.bmi)} - ${it.status.uppercase()}",
                                 modifier = Modifier.padding(
                                     horizontal = 8.dp,
                                     vertical = 2.dp
@@ -99,6 +102,8 @@ fun WeightLedger(modifier: Modifier = Modifier) {
 @Composable
 private fun WeightLedgerPreview() {
     MyBMITheme() {
-        WeightLedger()
+        WeightLedger(
+            emptyList()
+        )
     }
 }

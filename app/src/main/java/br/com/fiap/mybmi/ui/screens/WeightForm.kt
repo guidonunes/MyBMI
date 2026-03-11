@@ -26,6 +26,7 @@ import br.com.fiap.mybmi.ui.theme.MyBMITheme
 fun WeightForm(onCancel: () -> Unit) {
     Column(
         modifier = Modifier
+            .padding(32.dp)
             .fillMaxSize()
             .background(color = Color.LightGray)
             .safeContentPadding()

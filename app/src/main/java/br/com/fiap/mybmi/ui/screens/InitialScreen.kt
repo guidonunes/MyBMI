@@ -16,16 +16,23 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.fiap.mybmi.ui.theme.MyBMITheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InitialScreen(viewModel: InitialScreenViewModel) {
+
+    val weights by viewModel.weights.collectAsStateWithLifecycle(
+        initialValue = emptyList()
+    )
 
     val currentScreen = viewModel.currentScreen.value
 
@@ -82,7 +89,7 @@ fun InitialScreen(viewModel: InitialScreenViewModel) {
                            viewModel.openWeightLedger()
                        }
                    )
-                   is Screen.WeightLedger -> WeightLedger()
+                   is Screen.WeightLedger -> WeightLedger(weights)
                }
             }
         }
@@ -93,8 +100,8 @@ fun InitialScreen(viewModel: InitialScreenViewModel) {
 @Composable
 fun InitialScreenPreview() {
     MyBMITheme {
-        InitialScreen(
-            viewModel = InitialScreenViewModel()
-        )
+//        InitialScreen(
+//            viewModel = InitialScreenViewModel()
+//        )
     }
 }
