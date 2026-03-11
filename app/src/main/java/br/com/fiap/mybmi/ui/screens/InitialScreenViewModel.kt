@@ -9,6 +9,7 @@ import br.com.fiap.mybmi.repository.WeightRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class InitialScreenViewModel(
     private val weightRepository: WeightRepository
@@ -37,6 +38,12 @@ class InitialScreenViewModel(
 
         fun openWeightLedger(){
             _currentScreen.value = Screen.WeightLedger
+        }
+
+        fun insertWeight(weight: Weight) {
+            viewModelScope.launch {
+                weightRepository.insertWeight(weight)
+            }
         }
 
 }
