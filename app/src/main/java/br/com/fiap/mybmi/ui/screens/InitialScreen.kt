@@ -95,8 +95,12 @@ fun InitialScreen(viewModel: InitialScreenViewModel) {
                            viewModel.openWeightLedger()
                        }
                    )
-                   is Screen.WeightLedger -> WeightLedger(weights)
-
+                   is Screen.WeightLedger -> WeightLedger(
+                       weights,
+                       onDelete = { weight ->
+                           viewModel.deleteWeight(weight)
+                       }
+                   )
                }
             }
         }

@@ -46,4 +46,10 @@ class InitialScreenViewModel(
             }
         }
 
+        fun deleteWeight(weight: Weight) {
+            viewModelScope.launch {
+                weightRepository.deleteWeight(weight)
+            }
+        }
+
 }

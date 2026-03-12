@@ -48,6 +48,7 @@ fun WeightForm(
 
     Column(
         modifier = Modifier
+            .padding(16.dp)
             .fillMaxSize()
             .background(color = Color.LightGray)
             .safeContentPadding()
@@ -120,7 +121,7 @@ fun WeightForm(
             },
             modifier = Modifier.fillMaxWidth()
         ){
-            Text(text = "Registrar peso")
+            Text(text = "Save Weight")
         }
         Spacer(modifier = Modifier.height(48.dp))
         TextButton(

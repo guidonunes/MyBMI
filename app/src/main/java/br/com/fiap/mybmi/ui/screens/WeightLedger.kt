@@ -32,9 +32,13 @@ import androidx.compose.ui.unit.dp
 import br.com.fiap.mybmi.model.Weight
 
 import br.com.fiap.mybmi.ui.theme.MyBMITheme
+import br.com.fiap.mybmi.utils.BmiHelper.getBmiStatus
 
 @Composable
-fun WeightLedger(weight: List<Weight>) {
+fun WeightLedger(weight: List<Weight>,
+                 onDelete: (Weight) -> Unit = {}
+                 ) {
+
     Column() {
         Text(
             text = "My Progress",
@@ -69,11 +73,13 @@ fun WeightLedger(weight: List<Weight>) {
                     ) {
                         Card(
                             colors = CardDefaults.cardColors(
-                                containerColor = Color(weight.color.toLong(16))
+                                containerColor = Color(
+                                    getBmiStatus(weight.bmi).values.first().toLong(16)
+                                )
                             )
                         ) {
                             Text(
-                                text = "BMI: ${String.format("%.1f", weight.bmi)}  - ${weight.statusBmi}",
+                                text = "BMI: ${String.format("%.1f", weight.bmi)}  - ${weight.statusBmi.uppercase()}",
                                 fontWeight = FontWeight.Bold, color = Color.White,
                                 modifier = Modifier.padding(
                                     horizontal = 8.dp,
@@ -82,7 +88,9 @@ fun WeightLedger(weight: List<Weight>) {
                             )
                         }
                         IconButton(
-                            onClick = {}
+                            onClick = {
+                                onDelete(weight)
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
@@ -103,7 +111,8 @@ fun WeightLedger(weight: List<Weight>) {
 private fun WeightLedgerPreview() {
     MyBMITheme()  {
         WeightLedger(
-            weight = emptyList()
+            weight = emptyList(),
+            onDelete = {}
         )
     }
 }
